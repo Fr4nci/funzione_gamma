@@ -1,0 +1,312 @@
+\documentclass{report}
+\title{La funzione $\Gamma$}
+\author{Francesco Sermi}
+\date{\today}
+\input{preamble}
+\input{letterfonts}
+\input{macros}
+
+\begin{document}
+	\maketitle
+	\pagebreak
+	\chapter{Definizione e alcune proprietà}
+	\dfn{La funzione $\Gamma$ di Eulero}{Si definisce $\Gamma: (0; +\infty) \to \mathbb{R}$ come
+	\begin{equation}
+		\Gamma(x) = \int_{0}^{+\infty} e^{-t}t^{x-1}dt
+	\end{equation}
+	detta funzione gamma di Eulero.
+	}
+	\thm{Convergenza della $\Gamma$}{Mostriamo che l'integrale è convergente $\forall x \in \mathbb{R}, x>0$}
+	\begin{myproof}
+	Si osserva innanzitutto che $\forall x \in \mathbb{R}: x>0 \implies e^{-t} t^{x-1} > 0$ dunque possiamo utilizzare il teorema del confronto asintotico e si osserva che:
+	$$e^{-t} t^{x-1} \sim t^{x-1}$$ per $t \to 0^{+}$ e la funzione $t^{x-1}$ ha integrale convergente per $x > 0$, infatti in un intorno $V \subset \mathit{B}_0$ del tipo $[0; c]$:
+	$$
+		\int_{0}^{c} t^{x-1}dt = \int_{0}^c \frac{1}{t^{1-x}} dt
+	$$
+	dunque questo integrale, per comparazione con la serie armonica, converge per $1-x< 1 \implies x > 0$. Mentre per $t \to +\infty$ si osserva che $e^{-t} t^{x-1} \ll e^{-x^2}$ che ha integrale convergente in un intorno di infinito, dunque si ha che anche l'integrale di $e^{-t} t^{x-1}$ converge per criterio del confronto. \\
+	\end{myproof}
+	\noindent A questo punto si può mostrare un'interessante proprietà della funzione $\Gamma$, facendo una banale integrazione per parti:
+	$$
+		\int_{0}^{+\infty} e^{-t} t^{x-1} dt = [-e^{-t} t^{x-1}]_{0}^{+\infty} + \int_{0}^{+\infty} e^{-t} (x-1)t^{x-2}dt = (x-1)\Gamma (x-1) 
+	$$
+	Osservando che $\Gamma(1) = 1 = 0!$ si può anche mostrare che
+	$$
+		\Gamma(n+1) = n!
+	$$
+	procedendo per induzione
+	\mprop{La funzione $\Gamma$ è una generalizzazione del fattoriale}{La funzione gamma è una generalizzazione del fattoriale: sia $n \in \mathbb{N}$, allora
+	$$
+	\Gamma(n+1) = n!
+	$$	
+	}
+	\begin{myproof}
+		Si osserva che $\Gamma(0 + 1) = 0! = 1$ dunque il caso banale $n=0$ è dimostrato. Mostriamo adesso che $n \implies n+1$: si verifica che $$\Gamma(n+1) = \int_{0}^{+\infty} e^{-t} t^ndt = \left[-e^{-t} t^n \right]_{0}^{+\infty} + x\int_{0}^{+\infty} e^{-t}t^{n-1}dt = n \int_{0}^{+\infty} e^{-t} t^{n-1}dt = n\Gamma(n) \stackrel{\text{ip. induttiva}}{=} n! $$
+	\end{myproof}
+Possiamo caratterizzare, dalle proprietà che abbiamo visto, la funzione $\Gamma$ nella seguente maniera:
+\thm{Caratterizzazione della funzione $\Gamma$}{La funzione $\Gamma$ è una funzione che soddisfa le seguenti proprietà:
+\begin{enumerate}[label=\protect\circled{\arabic*}]
+	\item L'equazione funzionale $f(x+1) = xf(x)$
+	\item la relazione $f(n+1) = n! \, \, \, \forall n \in \mathbb{N}$
+	\item $\ln{\Gamma}$ è una funzione convessa
+\end{enumerate}
+}
+Per effettuare questa dimostrazione faremo uso del seguente risultato:
+\mlenma{Disuguaglianza di Holder}{Se  $f, g$ funzioni Riemann-integrabili e $p, q > 1: \frac{1}{p} + \frac{1}{q} = 1$
+$$
+\left| \int_{a}^{b} fg \right| \leq \left( \int_{a}^b |f|^p \right)^{\frac{1}{p}}  \left(\int_{a}^{b} |g|^{q} \right)^{\frac{1}{q}}
+$$
+}
+\begin{myproof}
+si osserva che la \circled{1} e la \circled{2} sono già state dimostrate nella proposizione precedente integrando per parti. \\
+Per dimostrare la \circled{3} si osserva che
+\begin{align*}
+&\Gamma \left(\frac{x}{p} + \frac{y}{q} \right) = \int_{0}^{+\infty} t^{\frac{x}{p} + \frac{y}{q} - 1(\frac{1}{p} + \frac{1}{q})} e^{-t(\frac{1}{p} + \frac{1}{q})} dt = \int_{0}^{+\infty} (t^{\frac{x}{p} - \frac{1}{p}} e^{-\frac{t}{p}}) (t^{\frac{y}{q} - \frac{1}{q}} e^{-\frac{t}{q}}) dt \stackrel{\text{dis. di Holder}}{\leq} \left( \int_{0}^{+\infty} t^{x-1}e^{-t} \right)^{\frac{1}{p}} \left(\int_{0}^{+\infty} t^{y-1} e^{-t} \right)^{\frac{1}{q}} \\
+&\implies \Gamma \left( \frac{x}{p} + \frac{y}{q} \right) \leq \Gamma^{\frac{1}{p}} \Gamma^{\frac{1}{q}}
+\end{align*}
+ma adesso applicando il logaritmo:
+$$
+	\ln{\Gamma \left( \frac{x}{p} + \frac{y}{q} \right)} \leq \frac{1}{p} \ln{ \Gamma{ \left( x \right) } } + \frac{1}{q} \ln{ \Gamma{ \left( y \right) }}
+$$
+ma adesso ponendo $\frac{1}{q} = t$ si osserva che $\frac{1}{p} = 1 - t$, si ha
+$$
+	\ln{\Gamma \left( (1-t)x + ty \right) } \leq (1-t) \ln{\Gamma \left( x \right) } + t \ln{\Gamma \left( y \right) }
+$$
+che è la definizione di convessità siccome $t \in (0, 1)$, dunque la tesi
+\end{myproof}
+\noindent Un altro risultato molto importante è il seguente:
+\thm{Teorema di Bohr-Mollerup}{Sia $f(x): (0, +\infty) \mapsto \mathbb{R_{+}}$ una funzione positiva tale che
+\begin{enumerate}[label=\protect\circled{\arabic*}]
+	\item $f(x+1) = x f(x)$
+	\item $f(1) = 1$
+	\item $\ln{f}$ è convesso
+\end{enumerate}
+allora $f(x) = \Gamma(x)$
+}
+\begin{myproof}
+sappiamo già che la funzione $\Gamma$ soddisfa queste proprietà ($\Gamma(1) = \int_{0}^{+\infty} e^{-t}dt = 1$). Basterà quindi mostrare che la funzione $f(x)$ è unicamente determinata da queste proprietà. Inoltre, grazie alla proprietà \circled{1}, basterà mostrare che questa proprietà vale $\forall x \in (0, 1)$ e possiamo poi ricondurre i casi $x > 1$ all'intervallo $x \in (0,1)$. Innanzitutto, poniamo $\varphi(x) = \ln{f(x)}$ e si osserva che, siccome è convessa, possiamo valutare i rapporti incrementali negli intervalli $[n, n+1]$, $[n+1, n+1+x]$ e $[n+1, n+2]$ (prendendo $n \in \mathbb{N}$) che, per proprietà delle funzioni convesse, sono crescenti in entrambe le "entrate" $[a, b]$, dunque
+$$
+	\ln{n} \leq \frac{\varphi(n+1+x) - \varphi(n+1)}{x} \leq \ln{(n+1)}
+$$
+Ma si osserva che $\varphi(n+1+x) = \ln{(n+x)} + \varphi(n+x) \stackrel{\text{ip. induttiva}}{=} \varphi{x} + \ln{((n+x) \cdots (x+1)x)}$. Dunque possiamo stimare il rapporto incrementale centrale nella seguente maniera:
+$$
+\frac{\varphi(n+1+x)-\varphi(n+1)}{x} = \frac{\varphi(x) - \ln{[(x+n) \cdots x}]}{x}
+$$
+Sottraendo nella disuguaglianze sopra da tutte le parti $\ln{n}$ e moltiplicando per $x$ si ottiene che
+$$
+0 \leq \varphi(x) - \ln{\left( \frac{n!n^x}{x(x+1)\cdots (x+n)} \right)} \leq x \ln{ \left( 1 + \frac{1}{n} \right)}
+$$
+ma per $n \to +\infty$ la quantità sulla destra tende a $0$, dunque abbiamo determinato $\varphi(x)$ in maniera univoca: infatti
+$$
+\lim_{n \to +\infty} \varphi(x) - \ln{\left(\frac{n!n^x}{(x+n)\cdots x} \right)} = 0 \implies \varphi(x) = \lim_{n \to +\infty} \ln{\left(\frac{n!n^x}{(x+n)\cdots x} \right)}
+$$
+\end{myproof}
+\cor{Espressione alternativa della $\Gamma$}{Si ha che
+$$
+\Gamma(x) = \lim_{n \to +\infty} \ln{\left(\frac{n!n^x}{(x+n)\cdots x} \right)}
+$$
+}
+
+\noindent Inoltre una proprietà molto utile della $\Gamma$ è sicuramente il legame che essa ha con altre funzione, come per esempio la $\beta (x, y)$ di Eulero
+$$
+	\beta(x, y) = \int_0^1 t^{x-1} (1-t)^{y-1}dt
+$$
+che, come si può verificare banalmente, converge per $1-x<1$ e per $1-y<1$ dunque per $x, y>0$.
+\mprop{Legame della funzione $\beta$ con la funzione $\Gamma$}{$$B(x_1, x_2) = \frac{\Gamma(x_1)\Gamma(x_2)}{\Gamma(x_1 + x_2)} $$}
+\begin{myproof}
+fissando la variabile $y$, poniamo $b(x) = \int_{0}^1 t^{x-1}(1-t)^{y-1}$. Si osserva che:
+$$
+b(1) = \int_{0}^{1} (1-t)^{y-1}dt = \frac{1}{y}
+$$
+e si osserva che:
+$$
+b(x+1) = \int_{0}^{1} \left( \frac{t}{1-t} \right)^x \left( 1-t \right)^{x+y-1} dt = \cancel{- \frac{1}{x+y} \left( \frac{t}{1-t} \right)^x \left( 1-t \right)^{x+y} \Big|_{0}^1} + \frac{x}{x+y} \int_{0}^{1} t^{x-1} (1-t)^{y-1}dt = \frac{x}{x+y} b(x)
+$$
+Inoltre si può mostrare che la funzione $b(x)$ è anch'essa logaritmo-convessa: applicando la disuguaglianza di Holder fissando $y$ si ha che
+\begin{align*}
+&b \left( \frac{x}{p} + \frac{z}{q} \right) = \int_{0}^1 t^{\frac{x}{p} + \frac{z}{q} - 1}(1-t)^{y(\frac{1}{p} + \frac{1}{q}) - 1} = \int_{0}^{1} t^\frac{x-1}{p} (1-t)^{\frac{y-1}{p}} t^{\frac{z-1}{q}}(1-t)^{\frac{y-1}{q}}dt \stackrel{\text{dis. di Holder}}{\leq} \\ &\stackrel{\text{dis. di Holder}}{\leq}  \left( \int_0^1 t^{x-1}(1-t)^{y-1} \right)^{\frac{1}{p}} \left( \int_{0}^1 t^{z-1}(1-t)^{y-1} \right)^{\frac{1}{q}} \implies b \left( \frac{x}{p} + \frac{z}{q} \right) \leq b(x)^{\frac{1}{p}} b(x)^{\frac{1}{q}}
+\end{align*}
+prendendo il logaritmo da entrambe le parti si ottiene, come prima, si ottiene la definizione di convessità. Ponendo
+$$
+f(x) = \frac{\Gamma(x+y)}{\Gamma(y)} \beta(x, y)
+$$
+\noindent (sempre con $y$ fissato, anche se vale $\forall y$) si ottiene una funzione tale che $f(1) = 1$, $f(x+1) = xf(x)$ ed è logaritmo convessa (senza scendere nei calcoli, si osserva che il prodotto di funzioni logaritmicamente convesse è ancora convesso e $\Gamma(y)$ si comporta da costante in questo caso).
+\end{myproof}
+\noindent La $\Gamma$ è inoltre legata alla Gaussiana:
+\mprop{Legame con la gaussiana}{$\Gamma(\frac{1}{2}) = \sqrt{\pi}$}
+\begin{myproof}
+Se si considera la funzione $\beta(x, y)$ ed effettuiamo la sostituzione $t = \sin^2{\theta}$ si ottiene che
+$$
+\beta(x, y) = \int_0^1 t^{x-1} (1-t)^{y-1} dt = 2\int_{0}^{\frac{\pi}{2}} \sin^{2x-1}{(\theta)} \cos^{2y-1}{(\theta)}= \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}
+$$
+Si osserva che questo integrale per $x = y = \frac{1}{2}$ diventa esattamente uguale a $\pi \implies \Gamma(\frac{1}{2}) = \sqrt{\pi}$: infatti si osserva che nella funzione $\Gamma$, se $x=\frac{1}{2}$ e facciamo la sostituzione $t=s^2$, si ottiene che:
+$$
+\Gamma(x) = 2 \int_{0}^{+\infty} s^{2x-1} e^{-s^2} ds \implies \Gamma \left( \frac{1}{2} \right) = \int_{0}^{+\infty} e^{-s^2} = \sqrt{\pi}
+$$
+\end{myproof}
+Un altro modo per esprimere la funzione $\Gamma$ è il seguente:
+\mprop{Forma equivalente}{
+	$$\Gamma(x) = \frac{2^{x-1}}{\sqrt{\pi}} \Gamma \left( \frac{x}{2} \right) \Gamma \left(\frac{x+1}{2} \right)$$
+}
+\begin{myproof}
+Si procede utilizzando il teorema di Bohr-Mollerup, verificando le ipotesi: si osserva che ponendo $f(x)$ come nell'enunciato, si verifica facilmente che $f(1) = 1$. Inoltre
+$$
+f(x+1) = \frac{2^x}{\sqrt{\pi}}\Gamma \left( \frac{x+1}{2} \right)\Gamma \left( \frac{x}{2} + 1 \right) = \frac{2^x}{\sqrt{\pi}} \Gamma \left( \frac{x+1}{2} \right) \frac{x}{2} \Gamma \left( \frac{x}{2} \right) = x \frac{2^{x-1}}{\sqrt{\pi}} \Gamma \left( \frac{x+1}{2} \right) \Gamma \left( \frac{x}{2} \right) = x f(x)
+$$
+Inoltre, in quanto prodotto di funzioni logaritmicamente convesse, segue la terza proprietà.
+\end{myproof}
+\chapter{Derivabilità della funzione $\Gamma$}
+	\noindent A questo punto si può mostrare che questa funzione è derivabile: per farlo possiamo sfruttare due fatti a noi molto importanti:
+	\begin{enumerate}[label=\protect\circled{\arabic*}]
+		\item potremo mostrare che la funzione $\Gamma$ è una funzione analitica $\implies$ la funzione $\Gamma$ è di classe $C^{\infty} \implies$ la funzione è derivabile (con derivata continua);
+		\item possiamo mostrare che è possibile scambiare la derivata con l'integrale della gamma e mostrare che la funzione ottenuta è allora continua
+	\end{enumerate}
+	Per dimostrarlo tramite il secondo punto abbiamo bisogno di una serie di risultati intermedi (dei teoremi) che ci consentiranno, sotto opportune condizioni, di passare il limite sotto il segno di integrale:
+	\thm{Passaggio del limite sotto il segno di integrale}{Siano $f_n,f:[a,b]\to \mathbb{R}$ funzione limitate e Riemann integrabili nell'intervallo chiuso e limitato $[a;b]$. Supponiamo inoltre che ci sia convergenza uniforme: $f_n \rightrightarrows f$. Allora
+$$
+	\lim_{n \to +\infty} \int_a^b f_n(x)dx = \int_a^b f(x)dx
+$$	
+Inoltre scelto qualunque $c \in [a;b]$ e posto:
+\begin{align*}
+	&F_k (x) = \int_c^x f_k(t)dt, & &F(x) = \int_c^x f(x)dx
+\end{align*}
+si ha convergenza uniforme $F_k \rightrightarrows F$
+	}
+	\begin{myproof}
+	Se $f_n$ e $f$ sono Riemann-integrabili anche $f_n-f$ e $|f_n -f|$ lo sono, dunque si ha che:
+	$$
+		\left| \int_a^b f_n(x)dx - \int_a^b f(x)dx \right| \leq \int_a^b \left|f_n(x) - f(x) \right| dx \leq \int_a^b \sup_{t \in [a;b]} |f_n(x) - f(x)|dx = \sup_{t \in [a;b]} |f_n(x) - f(x)| \cdot \int_a^b 1dx \to 0
+	$$
+	segue quindi che $\lim\limits_{n \to +\infty}\int_a^b f_n(x) = \int_a^b f(x)$.Se definiamo $F_k$ e $F$ come nell'enunciato del teorema si stabilisce che:
+	$$
+	||F_k(x) - F||_{\infty} = \sup_{x \in [a;b]} \left| \int_c^x f_k(t) - f(t)dt \right| \leq \sup_{x \in [a;b]} (x-c) \cdot ||f_k - f||_{\infty} \leq (b-a) \cdot ||f_k - f||_{\infty} \to 0
+	$$
+	Ne segue la tesi, ovvero che $F_k \rightrightarrows F$
+	\end{myproof}
+	\pagebreak
+	\thm{Convergenza dominata localmente uniforme}{Siano $f_k:(a,b) \to \mathbb{R}$ e $f:(a, b)\to \mathbb{R}$ funzioni localmente Riemann integrabili sull'intervallo $(a,b)$ con $-\infty \leq a < b \leq +\infty$ tali che $\forall [\alpha, \beta] \subseteq (a, b)$ si abbia convergenza uniforme $f_k \rightrightarrows f$ sull'intervallo $[\alpha, \beta]$. \\
+	Supponiamo esista inoltre una funzione $g:(a,b) \to \mathbb{R}$ integrabile in senso improprio su $(a,b)$ con integrale convergente e tale che
+\begin{align*}
+	|f_k(x)| \leq g(x) & &\forall k \in \mathbb{N}, \forall x \in (a,b)
+\end{align*}
+Allora $f_k$ ed $f$ hanno integrale improprio convergente su $(a,b)$ e si ha che
+$$
+\lim_{k \to +\infty} \int_a^b f_k(x)dx = \int_a^b f(x)dx
+$$
+	}
+	\begin{myproof}
+	Ogni $f_k$ è assolutamente integrabile in senso improprio siccome abbiamo che $|f_k| \leq g$ dove $g$ ha integrale finito per ipotesi (dunque la convergenza di $|f_k|$ segue, banalmente, dal teorema del confronto). Visto che $f_k(x) \to f(x) \, \forall x \in (a, b)$ si ha anche che $|f(x)| \leq g(x) \, \forall x \in (a, b)$ e dunque anche $f$ è assolutamente convergente su $(a, b)$.
+	Visto che l'integrale improprio è convergente, allora sappiamo che fissando $\varepsilon > 0$ esistono $\alpha > a$ e $\beta < b$ per cui risulta che
+	\begin{align*}
+		&\int_{\beta}^b g(x)dx < \varepsilon & \int_{a}^{\alpha} g(x)dx < \varepsilon
+	\end{align*}
+	Ma sappiamo che $\forall [\alpha, \beta] \subseteq (a, b)$ abbiamo la convergenza uniforme, dunque per il teorema precedente abbiamo che
+	$$
+	\left| \int_{\alpha}^{\beta} f_k(x)dx - \int_{\alpha}^{\beta} f(x)dx \right| \leq \varepsilon
+	$$
+	Mettendo insieme tutte le cose si ha che:
+	\begin{align*}
+		&\left| \int_{\alpha}^{\beta} f_k(x)dx - \int_{\alpha}^{\beta} f(x)dx \right| \leq \left| \int_{a}^b f_k(x)dx - \int_a^b f(x)dx \right| = \\ 
+		&=\left| \int_a^{\alpha} f_k(x)dx - \int_{a}^{\alpha} f(x)dx + \int_{\alpha}^{\beta} f_k(x)dx - \int_{\alpha}^{\beta} f(x)dx + \int^b_{\beta} f_k(x)dx - \int^b_{\beta} f(x)dx \right| \leq \\
+		&\stackrel{\text{dis. triangolare}}{\leq} \left|\int_{a}^{\alpha} (f_k(x)-f(x))dx \right| + \left|\int_{\alpha}^{\beta} (f_k(x) - f(x))dx \right| + \left|\int_{\beta}^b (f_k(x) - f(x))dx \right| \leq \\ &\leq \varepsilon + \left| \int_{a}^{\alpha} (f_k(x) - f(x))dx \right| + \left| \int_{\beta}^{b} (f_k(x) - f(x))dx \right| \stackrel{|f_k(x)-f(x)| \leq 2g(x)}{\leq} \varepsilon + 2\int_{a}^{\alpha} g(x)dx + 2\int_{\beta}^b g(x)dx \leq \\
+		&\leq 5\varepsilon
+	\end{align*}
+	Ne segue la tesi tramite la definizione di limite
+	\end{myproof}
+\nt{La richiesta che esista una funzione $g$ che domina l'intera successione è essenziale (guardare per esempio la successioni di funzione $f_n(x) = \frac{1}{n} \frac{1}{1+(\frac{x-n}{n})^2}$. Tuttavia l'ipotesi che la successione di funzioni converga uniformemente non è necessaria: infatti la condizione di convergenza puntuale è sufficiente per poter effettuare il passaggio al limite sotto al segno di integrale, tuttavia questo risultato viene dimostrato per l'integrale di Lesbegue che utilizza però un concetto di \emph{misura} che necessita di un apparato matematico troppo avanzato. Il teorema qua sotto è una versione più debole valida anche per gli integrali di Riemann}
+\pagebreak
+	\thm{Convergenza dominata}{Siano $I \subseteq \mathbb{R}$ un intervallo e siano $-\infty \leq a < b \leq +\infty$. Sia $f:I \times (a,b) \to \mathbb{R}$ e sia $g:(a,b) \to \mathbb{R}$ una funzione continua con integrale (improprio) convergente
+	$$
+		\int_a^b g(t)dt < +\infty
+	$$
+	tale che $\forall x \in I$ e $\forall t \in (a,b)$ si abbia che $|f(x,t)| \leq g(t)$. Allora $\forall x \in I$ l'integrale $\int_a^b f(x, t)dt$ è convergente e continuo nella variabile $x$, cioè:
+	$$
+		\lim_{y \to x} \int_{a}^b f(y, t)dt = \int_a^b  f(x, t)dt
+	$$
+	}
+	\begin{myproof}
+	Si noti che l'indice $k \to +\infty, k \in \mathbb{N}$ nel teorema precedente può essere tranquillamente sostituito con un parametro continuo $y \to x, x \in \mathbb{R}$ grazie al teorema ponte fra limiti di funzioni e limite di successioni. Vogliamo dunque ricondurci al teorema precedente e per fare questo dimostreremo che fissando $[\alpha, \beta] \subseteq (a,b)$ e fissato $x \in I$ si ha convergenza uniforme delle funzioni $t \mapsto f(y,t)$ alla funzione $t \mapsto f(x, t)$ quando $y \to x$. \\
+	Senza perdere di generalità possiamo supporre che $I$ sia un intervallo chiuso e limitato contenente il punto fissato $x$. La funzione $f$ è dunque continua sull'insieme sequenzialmente compatto $I\times[\alpha;\beta]$ e quindi uniformemente continua per il teorema di Heine-Cantor (in due variabili). Significa dunque che $\forall \varepsilon > 0:\exists \delta > 0:\forall x, y \in I, \forall s, t \in [\alpha, \beta]$ si ha 
+	$$
+	\sqrt{(x-y)^2 + (t-s)^2} < \delta \implies |f(x, t) - f(y, s)| < \varepsilon
+	$$
+	Ma allora $\forall \varepsilon > 0$ se $x \in I$ e $|x-y|<\delta$ si ha che
+	$$
+	\sup_{t\in[\alpha, \beta]} \left|f(y,t) - f(x,t) \right| \leq \varepsilon
+	$$
+	e dunque
+	$$
+	\lim_{y \to x} \sup_{t \in [\alpha, \beta]}|f(y, t)-f(x, t)| = 0
+	$$
+	La tesi segue per il teorema precedente
+	\end{myproof}
+	\noindent Tramite questo teorema possiamo arrivare al seguente risultato
+	\thm{Passaggio della derivata sotto al segno di integrale}{Sia $f:I\times (a, b) \to \mathbb{R}$ una funzione continua, dove $I \subseteq \mathbb{R}$ è un intervallo e $-\infty \leq a < b \leq +\infty$. Supponiamo che $\forall t \in (a, b)$ la funzione $f$ sia derivabile rispetto a $x$ e  $\forall x \in I$ e che $\frac{\partial f}{\partial x}$ sia continua su tutto il rettangolo $I \times (a, b)$. Supponiamo esista una funzione $G: (a, b) \to \mathbb{R}$ localmente Riemann integrabile e con integrale $\int_a^b G(t)dt$ convergente tale che $\forall x \in I$ e $\forall t \in (a, b)$ si abbia che
+	$$
+	\left| \frac{\partial f}{\partial x} (x, t) \right| \leq G(t)
+	$$
+Allora si ha che $\forall x \in I$ si ha che
+$$
+	\frac{d}{dx} \int_a^b f(x, t)dt = \int_a^b \frac{\partial f}{\partial x}(x, t)dt
+$$
+}
+\begin{myproof}
+	Fissiamo $x_0 \in I$ e definiamo la seguente funzione:
+	\[
+g(x, t) =
+\begin{cases}
+\frac{f(x,t) - f(x_0, t)}{x - x_0} & \text{se } x \neq x_0, \\
+\frac{\partial f}{\partial x}(x, t) & \text{se } x = x_0.
+\end{cases}
+\]
+Osserviamo che la derivata dell'integrale nel punto $x_0$ è:
+$$
+\left[ \frac{d}{dx} \int_a^b f(x, t)dt \right]_{x=x_0} = \lim_{x \to x_0} \frac{\int_a^b f(x, t)dt - \int_a^b f(x_0, t)dt}{x-x_0} = \lim_{x \to x_0} \frac{\int_a^b f(x, t) - f(x_0, t)}{x-x_0} = \lim_{x \to x_0} \int_a^b g(x, t)dt
+$$
+mentre l'integrale della derivata è $\int_a^b g(x_0, t)dt$. Basterà quindi dimostrare che è possibile applicare il teorema di convergenza dominata alla funzione $g(x, t)$. \\
+E' facile verificare che la funzione $G$ domina la funzione $g$, infatti per il teorema di Lagrange sappiamo che $\forall x, \forall t:\exists x'$ con $|x'-x_0| < |x-x_0|$ (in pratica un punto fra $(x,x_0)$ solamente in $\mathbb{R}^n$ perde di significato la distanza col valore assoluto) tale che
+$$
+	|g(x', t)| = \left| \frac{\partial f}{\partial x} (x', t) \right| \leq G(t)
+$$
+Ci rimane dunque da dimostrare che la funzione $g:I\times (a,b) \to \mathbb{R}$ è continua. Ma ciò è chiaro per $x \neq x_0$ ma bisogna verificarlo per i punti $(x_0, t_0)$ con $t_0 \in (a, b)$. Ma per ipotesi abbiamo che la funzione $\frac{\partial f}{\partial x}$ è continua e sappiamo che
+$$
+\forall\varepsilon > 0: \exists \delta > 0: \sqrt{(x-x_0)^2 + (t-t_0)^2}<\delta \implies \left| \frac{\partial f}{\partial x}(x, t) - \frac{\partial f}{\partial x}(x_0, t_0) \right| < \varepsilon
+$$
+Applicando il teorema di Lagrange, naturalmente, sappiamo che se $(x, t)$ dista da $(x_0, t_0)$ per meno di $\delta$ allora si ha che
+$$
+|g(x,t) - g(x_0, t_0)| = \left| \frac{\partial f}{\partial x}(x', t) - \frac{\partial f}{\partial x}(x_0, t_0) \right| < \varepsilon
+$$
+Questo conclude la dimostrazione sulla continuità di $g(x,t)$ e la tesi segue dal teorema della convergenza dominata.
+\end{myproof}
+\noindent Adesso possiamo finalmente mostrare che la funzione $\Gamma$ è derivabile:
+\thm{Derivabilità della funzione $\Gamma$}{$$
+	\Gamma(x)=\int_{0}^{+\infty} e^{-t}t^{x-1}dt
+$$
+è derivabile e la sua derivata vale
+$$
+	\Gamma'(x) = \int_0^{+\infty} e^{-t} \cdot \ln{t} \cdot t^{x-1}dt
+$$
+}
+\begin{myproof}
+Si osserva che la funzione $e^{-t}t^{x-1}$ ha una la derivata parziale rispetto a $x$ pari a:
+$$
+	\frac{\partial f}{\partial x}(x, t)=e^{-t} \cdot \ln{t} \cdot t^{x-1}
+$$
+e chiaramente questa funzione è continua. Dobbiamo adesso trovare una funzione che la domina e si osserva che la funzione
+$$
+	g(t) = e^{-t} \cdot |ln(t)| \cdot \max\{t^{\frac{x_0}{2}-1}, t^{2x_0 - 1}\}
+$$
+è una funzione continua (anche se non è richiesto dal teorema) siccome composizione di funzioni continue. Per $t \to 0^+$ si osserva che
+$$
+	g(t) \sim |\ln{t}| \cdot t^{\frac{x_0}{2}-1} \ll t^{-1+\varepsilon}
+$$
+e questa disuguaglianza vale se e solo se $\varepsilon < \frac{x_0}{2}$. Dunque l'integrale $\int_0^1 g(t)dt$ converge per il criterio del confronto asintotico ($g(t) > 0 \forall t$) e se invece $t \to +\infty$ abbiamo che
+$$
+	g(t) \sim e^{-t} \cdot |\ln{x}| \cdot t^{2x_0 - 1} \ll \frac{1}{t^2}
+$$
+e sempre per criterio del confronto asintotico, questo integrale converge. Dunque, per il teorema del passaggio della derivata sotto il segno di integrale, siamo autorizzati a dire che
+$$
+	\frac{d}{dx} \int_{0}^{+\infty} e^{-t}t^{x-1}dt = \int_{0}^{+\infty} e^{-t} \cdot \ln{t} \cdot t^{x-1}dt
+$$
+Dunque la tesi
+\end{myproof}
+\end{document}
