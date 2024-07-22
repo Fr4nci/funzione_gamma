@@ -76,7 +76,7 @@ si osserva che la \circled{1} e la \circled{2} sono già state dimostrate nella 
 Per dimostrare la \circled{3} si osserva che
 \begin{align*}
 &\Gamma \left(\frac{x}{p} + \frac{y}{q} \right) = \int_{0}^{+\infty} t^{\frac{x}{p} + \frac{y}{q} - 1(\frac{1}{p} + \frac{1}{q})} e^{-t(\frac{1}{p} + \frac{1}{q})} dt = \int_{0}^{+\infty} (t^{\frac{x}{p} - \frac{1}{p}} e^{-\frac{t}{p}}) (t^{\frac{y}{q} - \frac{1}{q}} e^{-\frac{t}{q}}) dt \stackrel{\text{dis. di Holder}}{\leq} \left( \int_{0}^{+\infty} t^{x-1}e^{-t} \right)^{\frac{1}{p}} \left(\int_{0}^{+\infty} t^{y-1} e^{-t} \right)^{\frac{1}{q}} \\
-&\implies \Gamma \left( \frac{x}{p} + \frac{y}{q} \right) \leq \Gamma^{\frac{1}{p}} \Gamma^{\frac{1}{q}}
+&\implies \Gamma \left( \frac{x}{p} + \frac{y}{q} \right) \leq \Gamma^{\frac{1}{p}}(x) \Gamma^{\frac{1}{q}}(y)
 \end{align*}
 ma adesso applicando il logaritmo:
 $$
