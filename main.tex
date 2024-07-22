@@ -50,12 +50,27 @@ Possiamo caratterizzare, dalle proprietà che abbiamo visto, la funzione $\Gamma
 	\item $\ln{\Gamma}$ è una funzione convessa
 \end{enumerate}
 }
-Per effettuare questa dimostrazione faremo uso del seguente risultato:
+\noindent Per effettuare questa dimostrazione faremo uso del seguente risultato (che fa uso della disuguaglianza di Young, che si può facilmente ottenere ragionando sulla convessità della funzione esponenziale):
 \mlenma{Disuguaglianza di Holder}{Se  $f, g$ funzioni Riemann-integrabili e $p, q > 1: \frac{1}{p} + \frac{1}{q} = 1$
 $$
 \left| \int_{a}^{b} fg \right| \leq \left( \int_{a}^b |f|^p \right)^{\frac{1}{p}}  \left(\int_{a}^{b} |g|^{q} \right)^{\frac{1}{q}}
 $$
 }
+\begin{myproof}
+si osserva che
+$$
+\frac{ \left| \int_a^b fg \, dx \right| }{ \left( \int_{a}^b |f|^p \, dx \right)^{\frac{1}{p}} \left( \int_{a}^b |g|^q \, dx \right)^{\frac{1}{q}} } \leq \int_{a}^b \frac{|fg|}{ \left( \int_{a}^b |f|^{p} \, dx \right)^{\frac{1}{p}} \left( \int_{a}^b |g|^q \, dx \right)^{\frac{1}{q}} } \, dx = \int_{a}^b \frac{|f|}{\left( \int_{a}^b |f|^p \right)^{\frac{1}{p}}} \frac{|g|}{\left( \int_{a}^b |g|^q \right)^{\frac{1}{q}}} \leq \int_{a}^b \frac{|f|^p}{\int_{a}^b |f|^p} + \frac{|g|^q}{\int_{a}^b |g|^q}
+$$
+Dunque si ha che
+$$
+\int_{a}^b \frac{|f|^p}{\int_{a}^b |f|^p} + \frac{|g|^q}{\int_{a}^b |g|^q} = 1
+$$
+e concludiamo ottenendo la tesi
+$$
+	\int_{a}^b |fg| dx \leq \left( \int_{a}^b |f|^p dx \right)^{\frac{1}{p}} \left( \int_{a}^b |g|^{q} \right)^{\frac{1}{q}}
+$$
+\end{myproof}
+\noindent Vediamo adesso come mostrare il teorema precedente
 \begin{myproof}
 si osserva che la \circled{1} e la \circled{2} sono già state dimostrate nella proposizione precedente integrando per parti. \\
 Per dimostrare la \circled{3} si osserva che
@@ -143,7 +158,8 @@ $$
 \Gamma(x) = 2 \int_{0}^{+\infty} s^{2x-1} e^{-s^2} ds \implies \Gamma \left( \frac{1}{2} \right) = \int_{0}^{+\infty} e^{-s^2} = \sqrt{\pi}
 $$
 \end{myproof}
-Un altro modo per esprimere la funzione $\Gamma$ è il seguente:
+\noindent Un altro modo per esprimere la funzione $\Gamma$ è il seguente (anche se si può ottenere anche tramite la formula ottenuto come corollario del teorema di Bohr-Mollerup):
+\pagebreak
 \mprop{Forma equivalente}{
 	$$\Gamma(x) = \frac{2^{x-1}}{\sqrt{\pi}} \Gamma \left( \frac{x}{2} \right) \Gamma \left(\frac{x+1}{2} \right)$$
 }
@@ -153,6 +169,40 @@ $$
 f(x+1) = \frac{2^x}{\sqrt{\pi}}\Gamma \left( \frac{x+1}{2} \right)\Gamma \left( \frac{x}{2} + 1 \right) = \frac{2^x}{\sqrt{\pi}} \Gamma \left( \frac{x+1}{2} \right) \frac{x}{2} \Gamma \left( \frac{x}{2} \right) = x \frac{2^{x-1}}{\sqrt{\pi}} \Gamma \left( \frac{x+1}{2} \right) \Gamma \left( \frac{x}{2} \right) = x f(x)
 $$
 Inoltre, in quanto prodotto di funzioni logaritmicamente convesse, segue la terza proprietà.
+\end{myproof}
+\mprop{Limite asintotico con la formula di Stirling}{Si ha che
+$$
+	\lim_{x \to +\infty} \frac{\Gamma(x+1)}{(\frac{x}{e})^x \sqrt{2\pi x}} = 1
+$$}
+\begin{myproof}
+Prendiamo la funzione $\Gamma$ ed effettuiamo la sostituzione $t=x(1+u)$, dunque $dt = xdu$:
+$$
+\Gamma(x+1) = \int_{0}^{+\infty} t^{x} e^{-t} = \int_{0}^{+\infty} x^x (1+u)^x xdu = x^x e^{-x} \int_{-1}^{+\infty}  [(1+u)e^{-u}]^x du
+$$
+A questo punto si introduce una funzione $h(u)$ tale che $h(0)=1$:
+$$
+(1+u)e^{-u} = e^{-\frac{u^2}{2} h(u)} \implies h(u) = \frac{2}{u^2} [u - \ln{(1+u)}]
+$$
+dunque abbiamo che $h(u)$ è continua e decresce da $+\infty$ a $0$ mentre $u$ va da $-1$ a $+\infty$. Si effettua la sostituzione $u=s\sqrt{\frac{2}{x}}$ e risulta che
+$$
+\Gamma(x+1) = x^x e^{-x} \sqrt{2x} \int_{-\infty}^{+\infty} \Phi_x(s)ds
+$$
+dove
+\begin{align*}
+\Phi_x(s) = \begin{cases}
+    e^{-s^2 h\left(s \sqrt{\frac{2}{x}}\right)} & \text{se } -\sqrt{\frac{x}{2}} < s < +\infty \\
+    0 & \text{se } s \leq - \sqrt{\frac{x}{2}} \\
+\end{cases}
+\end{align*}
+Tuttavia si notano i seguenti fatti sulla funzione $\Phi_x(s)$:
+\begin{enumerate}[label=\protect\circled{\arabic*}]
+	\item $\forall s, \Phi_x(s) \to e^{-s^2}$ per $x \to +\infty$;
+	\item La convergenza è uniforme per ogni compatto della forma $[-A; A]$ con $A < +\infty$
+	\item quando $s<0$, la convergenza è dominata siccome $0 < \Phi_x(s) < e^{-s^2}$
+	\item quando $s>0$ e $x>1$ la convergenza è sempre dominata, siccome $0 < \Phi_x(s) < \Phi_1(s)$
+	\item $\int_{0}^{+\infty} \Phi_1(s) < \infty$
+\end{enumerate}
+dunque è possibile applicare il teorema di convergenza dominata localmente uniforme.
 \end{myproof}
 \chapter{Derivabilità della funzione $\Gamma$}
 	\noindent A questo punto si può mostrare che questa funzione è derivabile: per farlo possiamo sfruttare due fatti a noi molto importanti:
