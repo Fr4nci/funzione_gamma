@@ -1,1 +1,1 @@
-"# funzione_gamma" 
+# Funzione Gamma 
